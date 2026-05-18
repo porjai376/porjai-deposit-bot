@@ -159,6 +159,90 @@ function buildDepositFlex() {
   };
 }
 
+function buildAskPhotoFlex(typeName, question, photoText) {
+  return {
+    type: "flex",
+    altText: question,
+    contents: {
+      type: "bubble",
+      size: "mega",
+      body: {
+        type: "box",
+        layout: "vertical",
+        backgroundColor: "#0B0B0B",
+        paddingAll: "20px",
+        spacing: "md",
+        contents: [
+          {
+            type: "text",
+            text: "พอใจ รับฝากสินค้า",
+            weight: "bold",
+            size: "xl",
+            color: "#FACC15",
+            align: "center"
+          },
+          {
+            type: "separator",
+            color: "#C9A227",
+            margin: "md"
+          },
+          {
+            type: "text",
+            text: typeName,
+            weight: "bold",
+            size: "lg",
+            color: "#FFFFFF",
+            align: "center"
+          },
+          {
+            type: "text",
+            text: question,
+            wrap: true,
+            size: "md",
+            color: "#FFFFFF",
+            align: "center"
+          },
+          {
+            type: "text",
+            text: photoText,
+            wrap: true,
+            size: "sm",
+            color: "#E5E7EB",
+            align: "center"
+          },
+          {
+            type: "button",
+            style: "primary",
+            color: "#FACC15",
+            action: {
+              type: "uri",
+              label: "📸 อัพโหลด / ถ่ายภาพ",
+              uri: "line://nv/camera"
+            }
+          },
+          {
+            type: "button",
+            style: "secondary",
+            action: {
+              type: "uri",
+              label: "📍 เปิดแผนที่ร้าน",
+              uri: "https://www.google.com/maps?q=16.1741904,102.7281221"
+            }
+          },
+          {
+            type: "text",
+            text: "หากไม่สะดวกถ่าย เชิญมาที่ร้านพอใจรับฝากได้เลยครับ",
+            wrap: true,
+            size: "xs",
+            color: "#FACC15",
+            align: "center"
+          }
+        ]
+      }
+    }
+  };
+}
+
 function menuButton(icon, title, desc, bgColor, textColor, messageText) {
   return {
     type: "box",
@@ -288,37 +372,28 @@ async function handleEvent(event) {
     }
 
     if (text === "ฝากสินค้า:มือถือ") {
-      return reply(event.replyToken, {
-        type: "text",
-        text:
-`มือถือรุ่นไหนครับ
-รบกวนลูกค้าถ่ายรูปภาพมือถือ
-หากไม่สะดวกถ่าย เชิญมาที่ร้านพอใจรับฝากได้เลยครับ
-พิกัด: https://www.google.com/maps?q=16.1741904,102.7281221`
-      });
-    }
+  return reply(event.replyToken, buildAskPhotoFlex(
+    "📱 มือถือ / แท็บเล็ต",
+    "มือถือรุ่นไหนครับ",
+    "รบกวนลูกค้าถ่ายรูปภาพมือถือ เพื่อให้แอดมินประเมินราคาเบื้องต้นครับ"
+  ));
+}
 
     if (text === "ฝากสินค้า:เครื่องใช้ไฟฟ้า") {
-      return reply(event.replyToken, {
-        type: "text",
-        text:
-`เครื่องใช้ไฟฟ้าชนิดใดครับ
-รบกวนลูกค้าถ่ายรูปภาพเครื่องใช้ไฟฟ้า
-หากไม่สะดวกถ่าย เชิญมาที่ร้านพอใจรับฝากได้เลยครับ
-พิกัด: https://www.google.com/maps?q=16.1741904,102.7281221`
-      });
-    }
+  return reply(event.replyToken, buildAskPhotoFlex(
+    "🖥️ เครื่องใช้ไฟฟ้า",
+    "เครื่องใช้ไฟฟ้าชนิดใดครับ",
+    "รบกวนลูกค้าถ่ายรูปภาพเครื่องใช้ไฟฟ้า เพื่อให้แอดมินประเมินราคาเบื้องต้นครับ"
+  ));
+}
 
     if (text === "ฝากสินค้า:อื่นๆ") {
-      return reply(event.replyToken, {
-        type: "text",
-        text:
-`สินค้ามีค่าประเภทใดครับ
-รบกวนลูกค้าถ่ายรูปภาพสินค้า
-หากไม่สะดวกถ่าย เชิญมาที่ร้านพอใจรับฝากได้เลยครับ
-พิกัด: https://www.google.com/maps?q=16.1741904,102.7281221`
-      });
-    }
+  return reply(event.replyToken, buildAskPhotoFlex(
+    "💎 สินค้ามีค่าประเภทอื่นๆ",
+    "สินค้ามีค่าประเภทใดครับ",
+    "รบกวนลูกค้าถ่ายรูปภาพสินค้า เพื่อให้แอดมินประเมินราคาเบื้องต้นครับ"
+  ));
+}
   }
 
   if (event.type === "message" && event.message.type === "image") {
