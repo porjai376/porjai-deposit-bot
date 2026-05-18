@@ -447,12 +447,9 @@ async function handleEvent(event) {
   if (event.type === "message" && event.message.type === "text") {
     const text = event.message.text.trim();
 
-    if (text === "#ทดสอบ") {
-      return reply(event.replyToken, {
-        type: "text",
-        text: "บอททำงานแล้วครับ ✅"
-      });
-    }
+    if (text === "ติดต่อแอดมิน" || text === "#ติดต่อแอดมิน") {
+    return reply(event.replyToken, buildContactAdminFlex());
+  }
 
     if (text === "#สนใจฝากสินค้า") {
       return reply(event.replyToken, [
@@ -491,20 +488,21 @@ async function handleEvent(event) {
     "รบกวนลูกค้าถ่ายรูปภาพสินค้า เพื่อให้แอดมินประเมินราคาเบื้องต้นครับ"
   ));
 }
-  }
 
 if (text === "ติดต่อแอดมิน" || text === "#ติดต่อแอดมิน") {
   return reply(event.replyToken, buildContactAdminFlex());
 }
 
-  if (event.type === "message" && event.message.type === "image") {
+} // ← ปิด if text ตรงนี้
+
+if (event.type === "message" && event.message.type === "image") {
   return reply(
     event.replyToken,
     buildImageReceivedFlex()
   );
 }
 
-  return null;
+return null;
 }
 
 app.listen(process.env.PORT || 3000, () => {
