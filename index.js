@@ -243,6 +243,55 @@ function buildAskPhotoFlex(typeName, question, photoText) {
   };
 }
 
+function buildImageReceivedFlex() {
+  return {
+    type: "flex",
+    altText: "ได้รับภาพสินค้าเรียบร้อยครับ",
+    contents: {
+      type: "bubble",
+      size: "mega",
+      body: {
+        type: "box",
+        layout: "vertical",
+        backgroundColor: "#0B0B0B",
+        paddingAll: "20px",
+        spacing: "md",
+        contents: [
+          {
+            type: "text",
+            text: "📸 ได้รับภาพแล้วครับ",
+            weight: "bold",
+            size: "xl",
+            color: "#FACC15",
+            align: "center"
+          },
+          {
+            type: "separator",
+            color: "#C9A227",
+            margin: "md"
+          },
+          {
+            type: "text",
+            text: "หากมีหลายภาพ สามารถส่งมาต่อได้เลยนะครับ",
+            wrap: true,
+            size: "md",
+            color: "#FFFFFF",
+            align: "center"
+          },
+          {
+            type: "text",
+            text: "แอดมินได้รับภาพเรียบร้อยครับ\nจะทำการประเมินราคาให้สักครู่นะครับ\nขอบพระคุณครับ🙏",
+            wrap: true,
+            size: "sm",
+            color: "#E5E7EB",
+            align: "center"
+          }
+        ]
+      }
+    }
+  };
+}
+
 function menuButton(icon, title, desc, bgColor, textColor, messageText) {
   return {
     type: "box",
@@ -397,14 +446,11 @@ async function handleEvent(event) {
   }
 
   if (event.type === "message" && event.message.type === "image") {
-    return reply(event.replyToken, {
-      type: "text",
-      text:
-`แอดมินได้รับภาพเรียบร้อยครับ
-จะทำการประเมินราคาให้สักครู่นะครับ
-ขอบพระคุณครับ🙏`
-    });
-  }
+  return reply(
+    event.replyToken,
+    buildImageReceivedFlex()
+  );
+}
 
   return null;
 }
