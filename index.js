@@ -395,6 +395,54 @@ async function reply(replyToken, messages) {
   });
 }
 
+function buildImageReceivedFlex() {
+  return {
+    type: "flex",
+    altText: "ได้รับภาพเรียบร้อย",
+    contents: {
+      type: "bubble",
+      size: "mega",
+      body: {
+        type: "box",
+        layout: "vertical",
+        backgroundColor: "#0B0B0B",
+        paddingAll: "20px",
+        spacing: "md",
+        contents: [
+          {
+            type: "text",
+            text: "📸 ได้รับภาพแล้วครับ",
+            weight: "bold",
+            size: "xl",
+            color: "#FACC15",
+            align: "center"
+          },
+          {
+            type: "separator",
+            color: "#C9A227"
+          },
+          {
+            type: "text",
+            text: "หากมีหลายภาพให้ส่งมาต่อได้เลยนะครับ",
+            wrap: true,
+            align: "center",
+            color: "#FFFFFF"
+          },
+          {
+            type: "text",
+            text:
+"แอดมินได้รับภาพเรียบร้อยครับ\nจะทำการประเมินราคาให้สักครู่นะครับ\nขอบพระคุณครับ🙏",
+            wrap: true,
+            align: "center",
+            color: "#DDDDDD",
+            size: "sm"
+          }
+        ]
+      }
+    }
+  };
+}
+
 async function handleEvent(event) {
   if (event.type === "message" && event.message.type === "text") {
     const text = event.message.text.trim();
@@ -444,6 +492,10 @@ async function handleEvent(event) {
   ));
 }
   }
+
+if (text === "ติดต่อแอดมิน" || text === "#ติดต่อแอดมิน") {
+  return reply(event.replyToken, buildContactAdminFlex());
+}
 
   if (event.type === "message" && event.message.type === "image") {
   return reply(
